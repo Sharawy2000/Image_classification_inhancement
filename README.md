@@ -1,4 +1,5 @@
-# Python-Image-compression-using-K-Means
-A pattern recognition project for  image compression using K-Means algorithm, numpy, skimage, matplotlib and PyQt5
+# Python-Image-multiprocessing-classification and using enhancement algorithms
 
-The GUI is compatible only with 1920x1080 screen resolution.
+A parallel processing projet for  image multiprocessing using some enhancement algorithms, numpy, skimage, matplotlib and PyQt5
+
+The GUI is compatible only with 1340x800 screen resolution.
