@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def plot_metrics(results_path = 'runs/classify/train/results.csv'):
+def main(results_path = 'runs/classify/train/results.csv'):
     # Read the results from the CSV file into a pandas DataFrame
     results = pd.read_csv(results_path)
 
@@ -29,4 +29,6 @@ def plot_metrics(results_path = 'runs/classify/train/results.csv'):
     plt.show()
 
 # Example usage
-plot_metrics()
+if __name__ == "__main__":
+
+    main(results_path)

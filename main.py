@@ -5,6 +5,7 @@ import qdarkstyle
 import sys
 # import classification
 import predict
+import plot_metrics
 import mulit_brightness
 import multi_contrast
 import multi_gaussian_blur
@@ -92,7 +93,7 @@ class MyWindow(QWidget):
         self.classify_button.setStyleSheet("font-size: 12pt;")
         self.classify_button.resize(175, 50)
         self.classify_button.move(1050, 300)
-        self.classify_button.clicked.connect(self.predict_figure)
+        self.classify_button.clicked.connect(self.apply_classification)
 
         self.combo_algorithms = QComboBox(self)
         self.combo_algorithms.resize(175, 50)
@@ -199,7 +200,7 @@ class MyWindow(QWidget):
     def apply_classification(self):
         try:
             if filename is not None:
-                classification(self.filename)
+                image_classification(self.filename)
         except NameError:
             print("filename is not defined")
 
@@ -207,9 +208,6 @@ class MyWindow(QWidget):
     def loose_accuracy(self):
         loose_accuracy()
 
-    def predict_figure(self):
-        predict_fig(self.filename)
-        
     # Define a function for setting the dark theme
     def setDark(self):
         self.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
@@ -221,11 +219,8 @@ class MyWindow(QWidget):
 
 def loose_accuracy():
 
-    print('looser')
+    plot_metrics.main()
 
-def predict_fig(path):
-
-    predict.main(path)
 
 def brightness_algo(path):
 
@@ -274,21 +269,13 @@ def gaussian_blur_algo(path):
     print("Done :) (gaussian blur)")
 
 def image_classification(path):
-    # img = plt.imread(path)
 
     # Put here call of classification code ...
 
-    classified_image = classification.main(path)
+    predict.main(path)
     # Plot the original and compressed images side by side
 
-    global fig
-    fig, ax = plt.subplots(figsize=(10, 5))
-
-    ax.imshow(classified_image)
-
-    fig.show()
-
-    print("Done :) (contrast)")
+    print("Done :) [ Classification ]")
 
 
 
