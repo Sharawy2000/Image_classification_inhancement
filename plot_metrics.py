@@ -1,31 +1,39 @@
-import pandas as pd
-import matplotlib.pyplot as plt
+import cv2
+from matplotlib import pyplot as plt
+from ultralytics import YOLO  
+import numpy as np  
 
-# Path to the results CSV file
-results_path = 'runs/classify/train/results.csv'
+def images_classification(model_path, image_path):
+    # Load the pre-trained YOLO model
+    model = YOLO(model_path)
 
-# Read the results from the CSV file into a pandas DataFrame
-results = pd.read_csv(results_path)
+    # Perform prediction on the specific image
+    results = model(image_path)
 
-# Create a single window with two subplots
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
+    # Extract class names from the results
+    names_dict = results[0].names
 
-# Plot the first graph (Loss vs epochs)
-ax1.plot(results['                  epoch'], results['             train/loss'], label='train loss')
-ax1.plot(results['                  epoch'], results['               val/loss'], label='val loss', c='red')
-ax1.grid()
-ax1.set_title('Loss vs epochs')
-ax1.set_ylabel('loss')
-ax1.set_xlabel('epochs')
-ax1.legend()
+    # Extract predicted probabilities from the results and convert to a list
+    probs = results[0].probs.data.tolist()
 
-# Plot the second graph (Validation accuracy vs epochs)
-ax2.plot(results['                  epoch'], results['  metrics/accuracy_top1'] * 100)
-ax2.grid()
-ax2.set_title('Validation accuracy vs epochs')
-ax2.set_ylabel('accuracy (%)')
-ax2.set_xlabel('epochs')
+    # Print the predicted class based on the highest probability
+    predicted_label = names_dict[np.argmax(probs)]
 
-# Adjust layout and display the plots
-plt.tight_layout()
-plt.show()
+    def display_image(image):
+        plt.figure()
+        plt.imshow(image)
+        plt.xticks([])
+        plt.yticks([])
+        plt.grid(False)
+        plt.title('Image label: ' + predicted_label)
+        plt.show()
+
+    image = cv2.imread(image_path)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    display_image(image)
+
+# Example usage
+model_path = './runs/classify/train/weights/last.pt'
+image_path = "input.jpg"
+images_classification(model_path, image_path)
