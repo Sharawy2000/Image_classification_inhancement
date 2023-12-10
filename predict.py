@@ -34,5 +34,5 @@ def main(image_path,model_path='./runs/classify/train/weights/last.pt'):
 # Example usage
 if __name__ == "__main__":
 
-    main()
+    main(image_path)
 
