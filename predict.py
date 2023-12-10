@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from ultralytics import YOLO  
 import numpy as np  
 
-def images_classification(model_path, image_path):
+def main(image_path,model_path='./runs/classify/train/weights/last.pt'):
     # Load the pre-trained YOLO model
     model = YOLO(model_path)
 
@@ -19,21 +19,20 @@ def images_classification(model_path, image_path):
     # Print the predicted class based on the highest probability
     predicted_label = names_dict[np.argmax(probs)]
 
-    def display_image(image):
-        plt.figure()
-        plt.imshow(image)
-        plt.xticks([])
-        plt.yticks([])
-        plt.grid(False)
-        plt.title('Image label: ' + predicted_label)
-        plt.show()
-
     image = cv2.imread(image_path)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-    display_image(image)
+    plt.figure()
+    plt.imshow(image)
+    plt.xticks([])
+    plt.yticks([])
+    plt.grid(False)
+    plt.title('Image label: ' + predicted_label)
+    plt.show()
+
 
 # Example usage
-model_path = './runs/classify/train/weights/last.pt'
-image_path = "input.jpg"
-images_classification(model_path, image_path)
+if __name__ == "__main__":
+
+    main(image_path)
+

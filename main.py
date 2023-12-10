@@ -4,6 +4,7 @@ from PyQt5.QtGui import *
 import qdarkstyle
 import sys
 # import classification
+import predict
 import mulit_brightness
 import multi_contrast
 import multi_gaussian_blur
@@ -91,7 +92,7 @@ class MyWindow(QWidget):
         self.classify_button.setStyleSheet("font-size: 12pt;")
         self.classify_button.resize(175, 50)
         self.classify_button.move(1050, 300)
-        self.classify_button.clicked.connect(self.apply_classification)
+        self.classify_button.clicked.connect(self.predict_figure)
 
         self.combo_algorithms = QComboBox(self)
         self.combo_algorithms.resize(175, 50)
@@ -205,6 +206,10 @@ class MyWindow(QWidget):
 
     def loose_accuracy(self):
         loose_accuracy()
+
+    def predict_figure(self):
+        predict_fig(self.filename)
+        
     # Define a function for setting the dark theme
     def setDark(self):
         self.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
@@ -217,6 +222,10 @@ class MyWindow(QWidget):
 def loose_accuracy():
 
     print('looser')
+
+def predict_fig(path):
+
+    predict.main(path)
 
 def brightness_algo(path):
 
