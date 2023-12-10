@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import *
 import qdarkstyle
 import sys
-import classification
+# import classification
 import mulit_brightness
 import multi_contrast
 import multi_gaussian_blur
@@ -70,7 +70,7 @@ class MyWindow(QWidget):
         layout = QVBoxLayout(self)
 
         # Add a label
-        self.label = QLabel("Image Processing Project", self)
+        self.label = QLabel("Parallel Image Processing & Classification", self)
         self.label.setStyleSheet("font-size: 20pt; font-weight: bold;")
         self.label.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.label, alignment=Qt.AlignTop)
@@ -78,18 +78,24 @@ class MyWindow(QWidget):
         self.select_file_button = QPushButton('Select Image', self)
         self.select_file_button.setStyleSheet("font-size: 12pt;")
         self.select_file_button.resize(175, 50)
-        self.select_file_button.move(1050, 150)
+        self.select_file_button.move(1050, 100)
         self.select_file_button.clicked.connect(self.select_file)
+
+        self.loose_accuracy_button = QPushButton('Loose vs Accuracy', self)
+        self.loose_accuracy_button.setStyleSheet("font-size: 12pt;")
+        self.loose_accuracy_button.resize(175, 50)
+        self.loose_accuracy_button.move(1050, 200)
+        self.loose_accuracy_button.clicked.connect(self.loose_accuracy)
 
         self.classify_button = QPushButton('Classify Image', self)
         self.classify_button.setStyleSheet("font-size: 12pt;")
         self.classify_button.resize(175, 50)
-        self.classify_button.move(1050, 250)
+        self.classify_button.move(1050, 300)
         self.classify_button.clicked.connect(self.apply_classification)
 
         self.combo_algorithms = QComboBox(self)
         self.combo_algorithms.resize(175, 50)
-        self.combo_algorithms.move(1050, 350)
+        self.combo_algorithms.move(1050, 400)
         self.combo_algorithms.addItems(['Contrast Enhance', 'Gaussian blur','Brightness'])
         default_index = self.combo_algorithms.findText('Contrast Enhance')
         if default_index != -1:
@@ -98,28 +104,28 @@ class MyWindow(QWidget):
         self.apply_Algo_button = QPushButton('Apply Algorithm ', self)
         self.apply_Algo_button.setStyleSheet("font-size: 12pt;")
         self.apply_Algo_button.resize(175, 50)
-        self.apply_Algo_button.move(1050, 450)
+        self.apply_Algo_button.move(1050, 500)
         self.apply_Algo_button.clicked.connect(self.apply_algorithm)
 
         self.show_button = QPushButton('Display', self)
         self.show_button.setStyleSheet("font-size: 12pt;")
         self.show_button.resize(175, 50)
-        self.show_button.move(1050, 550)
+        self.show_button.move(1050, 600)
         self.show_button.clicked.connect(self.show_fig)
 
         self.close_button = QPushButton('Quit', self)
         self.close_button.setStyleSheet("font-size: 12pt;")
         self.close_button.resize(175, 50)
-        self.close_button.move(1050, 650)
+        self.close_button.move(550, 700)
         self.close_button.clicked.connect(self.close)
 
         self.dark = QRadioButton("Dark mode", self)
-        self.dark.move(1200, 730)
+        self.dark.move(1200, 700)
         self.dark.setChecked((True))
         self.dark.toggled.connect(self.setDark)
 
         self.light = QRadioButton("Light mode", self)
-        self.light.move(1200, 760)
+        self.light.move(1200, 730)
         self.light.toggled.connect(self.setLight)
 
     # Define a method to select an image
@@ -142,7 +148,7 @@ class MyWindow(QWidget):
 
     def enhance_algorithms(self):
         if self.flag1:
-            loading = QPixmap('Images/loading.jpg')
+            loading = QPixmap('Images/error-image.jpg')
             self.img_com.setPixmap(loading)
             self.img_com.setScaledContents(True)
             self.img_com.show()
@@ -197,7 +203,8 @@ class MyWindow(QWidget):
             print("filename is not defined")
 
 
-
+    def loose_accuracy(self):
+        loose_accuracy()
     # Define a function for setting the dark theme
     def setDark(self):
         self.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
@@ -207,6 +214,9 @@ class MyWindow(QWidget):
 
         self.setStyleSheet('')
 
+def loose_accuracy():
+
+    print('looser')
 
 def brightness_algo(path):
 
