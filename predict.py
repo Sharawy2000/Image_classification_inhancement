@@ -1,7 +1,8 @@
 import cv2
 from matplotlib import pyplot as plt
 from ultralytics import YOLO  
-import numpy as np  
+import numpy as np
+import cv2
 
 def main(image_path,model_path='./runs/classify/train/weights/last.pt'):
     # Load the pre-trained YOLO model

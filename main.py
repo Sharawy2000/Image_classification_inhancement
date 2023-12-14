@@ -4,8 +4,8 @@ from PyQt5.QtGui import *
 import qdarkstyle
 import sys
 # import classification
-import predict
-import plot_metrics
+# import predict
+# import plot_metrics
 import mulit_brightness
 import multi_contrast
 import multi_gaussian_blur
