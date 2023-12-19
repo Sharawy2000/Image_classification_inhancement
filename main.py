@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt,QThread,pyqtSignal
 from PyQt5.QtGui import *
 import qdarkstyle
 import sys
-import classification
+# import classification
 import predict
 import plot_metrics
 import mulit_brightness
