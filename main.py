@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt,QThread,pyqtSignal
 from PyQt5.QtGui import *
 import qdarkstyle
 import sys
@@ -11,6 +11,29 @@ import multi_contrast
 import multi_gaussian_blur
 import matplotlib.pyplot as plt
 
+# class AlgorithmThread(QThread):
+#     finished = pyqtSignal()
+#
+#     def __init__(self, path, algorithm_function):
+#         super().__init__()
+#         self.path = path
+#         self.algorithm_function = algorithm_function
+#
+#     def run(self):
+#         self.algorithm_function(self.path)
+#         self.finished.emit()
+#
+# class ClassificationThread(QThread):
+#     finished = pyqtSignal()
+#
+#     def __init__(self, path):
+#         super().__init__()
+#         self.path = path
+#
+#     def run(self):
+#         image_classification(self.path)
+#         self.finished.emit()
+#
 
 
 
@@ -171,6 +194,12 @@ class MyWindow(QWidget):
                 print("Applying Brightness Algorithm")
                 brightness_algo(self.filename)
 
+            ########
+            algorithm_thread = AlgorithmThread(self.filename, self.apply_algorithm())
+            algorithm_thread.finished.connect(self.on_algorithm_finished)
+            algorithm_thread.start()
+            ###########
+
             com = QPixmap("Results/enhanced_img.jpg")
             self.img_com.setPixmap(com)
             self.img_com.setScaledContents(True)
@@ -185,6 +214,23 @@ class MyWindow(QWidget):
             self.pcom.setStyleSheet("font-size: 16pt; font-weight: bold;")
             self.pcom.show()
 
+    ###########
+    # def on_algorithm_finished(self):
+    #     com = QPixmap("Results/enhanced_img.jpg")
+    #     self.img_com.setPixmap(com)
+    #     self.img_com.setScaledContents(True)
+    #
+    #     self.orgi = QLabel(self)
+    #     self.orgi.setGeometry(100, 890, 700, 50)
+    #     self.orgi.setStyleSheet("font-size: 16pt; font-weight: bold;")
+    #     self.orgi.show()
+    #
+    #     self.pcom = QLabel(self)
+    #     self.pcom.setGeometry(130, 890, 700, 50)
+    #     self.pcom.setStyleSheet("font-size: 16pt; font-weight: bold;")
+    #     self.pcom.show()
+    ########
+
     def show_fig(self):
         try:
             if fig is not None:
@@ -196,6 +242,21 @@ class MyWindow(QWidget):
         global selected_item
         selected_item = self.combo_algorithms.currentText()
         self.enhance_algorithms()
+
+    ##################
+    # def apply_classification(self):
+    #     try:
+    #         if filename is not None:
+    #             classification_thread = ClassificationThread(self.filename)
+    #             classification_thread.finished.connect(self.on_classification_finished)
+    #             classification_thread.start()
+    #     except NameError:
+    #         print("filename is not defined")
+    #
+    def on_classification_finished(self):
+        print("Classification thread finished.")
+
+    ###################
 
     def apply_classification(self):
         try:
