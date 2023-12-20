@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import threading
 
 def thread_num(algorithm,algo_factor,image,thread_numbers):
