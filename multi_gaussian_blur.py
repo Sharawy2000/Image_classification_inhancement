@@ -21,7 +21,3 @@ def main(path, blur_radius=2, thread_numbers=5):
     plt.imsave("Results/enhanced_img.jpg", blurred_image)
 
     return blurred_image
-
-
-if __name__ == '__main__':
-    main(path)

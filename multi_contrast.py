@@ -22,7 +22,3 @@ def main(path,contrast_factor=1.5,thread_numbers=5):
     plt.imsave("Results/enhanced_img.jpg", contrasted_image)
 
     return contrasted_image
-
-
-if __name__ == "__main__":
-    main(path)

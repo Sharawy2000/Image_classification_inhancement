@@ -19,6 +19,3 @@ def main(path='Images/image.jpeg',brightness_value=100,thread_numbers=5):
     plt.imsave("Results/enhanced_img.jpg", brightened_image)
 
     return brightened_image
-
-if __name__ == '__main__':
-    main(path)
