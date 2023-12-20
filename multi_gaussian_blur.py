@@ -13,7 +13,7 @@ def apply_gaussian_blur(image, blur_radius):
 
     return blurred_img.astype(np.uint8)
 
-def main(path, blur_radius=2.5, thread_numbers=5):
+def main(path, blur_radius=2, thread_numbers=5):
     image=np.array(Image.open(path))
     image = image.astype(np.uint8)
     # Apply the Gaussian blur algorithm in parallel
