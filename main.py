@@ -1,15 +1,17 @@
+import sys
+import matplotlib.pyplot as plt
+# import GUI library
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt,QThread,pyqtSignal
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import *
 import qdarkstyle
-import sys
-# import classification
+# import classification modules
 import predict
 import plot_metrics
+# import  image processing algorithm modules
 import mulit_brightness
 import multi_contrast
 import multi_gaussian_blur
-import matplotlib.pyplot as plt
 
 class MyWindow(QWidget):
     def __init__(self):
@@ -80,7 +82,7 @@ class MyWindow(QWidget):
         self.select_file_button.move(1050, 100)
         self.select_file_button.clicked.connect(self.select_file)
 
-        self.loose_accuracy_button = QPushButton('Loose vs Accuracy', self)
+        self.loose_accuracy_button = QPushButton('loss vs Accuracy', self)
         self.loose_accuracy_button.setStyleSheet("font-size: 12pt;")
         self.loose_accuracy_button.resize(175, 50)
         self.loose_accuracy_button.move(1050, 200)
@@ -106,7 +108,7 @@ class MyWindow(QWidget):
         self.apply_Algo_button.move(1050, 500)
         self.apply_Algo_button.clicked.connect(self.apply_algorithm)
 
-        self.show_button = QPushButton('Display', self)
+        self.show_button = QPushButton('Display using matplotlib', self)
         self.show_button.setStyleSheet("font-size: 12pt;")
         self.show_button.resize(175, 50)
         self.show_button.move(1050, 600)
@@ -216,14 +218,11 @@ class MyWindow(QWidget):
         self.setStyleSheet('')
 
 def loose_accuracy():
-
     plot_metrics.main()
 
 
 def brightness_algo(path):
-
     img = plt.imread(path)
-
     image_enhanced=mulit_brightness.main(path)
     # Plot the original and compressed images side by side
     global fig
@@ -231,51 +230,33 @@ def brightness_algo(path):
     print(f'{path}')
     ax[0].imshow(img)
     ax[1].imshow(image_enhanced)
-
     print("Done [ Brightness ] ")
 
 def contrast_algo(path):
-
     img = plt.imread(path)
-
     image_enhanced=multi_contrast.main(path)
     # Plot the original and compressed images side by side
-
     global fig
     fig, ax = plt.subplots(1, 2, figsize=(10, 5))
-
     ax[0].imshow(img)
-
     ax[1].imshow(image_enhanced)
-
     print("Done [ Increase Contrast }")
 
 def gaussian_blur_algo(path):
-
     img = plt.imread(path)
-
     image_enhanced=multi_gaussian_blur.main(path)
     # Plot the original and compressed images side by side
-
     global fig
     fig, ax = plt.subplots(1, 2, figsize=(10, 5))
-
     ax[0].imshow(img)
-
     ax[1].imshow(image_enhanced)
-
     print("Done [ Gaussian blur ]")
 
 def image_classification(path):
-
     # Put here call of classification code ...
-
     predict.main(path)
     # Plot the original and compressed images side by side
-
     print("Done [ Classification ]")
-
-
 
 
 if __name__ == '__main__':
