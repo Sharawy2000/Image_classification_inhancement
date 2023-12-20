@@ -44,8 +44,8 @@ def thread_num(algorithm,algo_factor,image,thread_numbers):
 
     print("Finished threads")
 
-    brightened_image = np.concatenate(final_results, axis=0)
-    brightened_image = brightened_image.astype(np.uint8)
+    Edited_image = np.concatenate(final_results, axis=0)
+    Edited_image = Edited_image.astype(np.uint8)
 
-    return brightened_image
+    return Edited_image
 
