@@ -28,7 +28,3 @@ def main(results_path = 'runs/classify/train/results.csv'):
     plt.tight_layout()
     plt.show()
 
-# Example usage
-if __name__ == "__main__":
-
-    main(results_path)
