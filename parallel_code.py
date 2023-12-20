@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import threading
 
 def thread_num(algorithm,algo_factor,image,thread_numbers):
-
-    height, width = image.shape[:2]
+    # Divide image into equal-sized height segments 
+    height = image.shape[0]
     part_height = height // thread_numbers
 
     # Split the image into threads parts for parallel processing
