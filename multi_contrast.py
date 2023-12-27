@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
-import parallel_code
+import parallel_code_1
 
 def contrast_algorithm(images, contrast_factor=1.5):
     images = images.astype(np.float64)
@@ -18,7 +18,7 @@ def main(path,contrast_factor=1.5,thread_numbers=5):
     input_path = np.array(Image.open(path))
     image = input_path.astype(np.uint8)
     # Apply the contrast algorithm in parallel
-    contrasted_image=parallel_code.thread_num(contrast_algorithm,contrast_factor,image,thread_numbers)
+    contrasted_image=parallel_code.thread_code(contrast_algorithm,contrast_factor,image,thread_numbers)
     plt.imsave("Results/enhanced_img.jpg", contrasted_image)
 
     return contrasted_image

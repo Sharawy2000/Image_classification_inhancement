@@ -6,7 +6,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import *
 import qdarkstyle
 # import classification modules
-import predict
+# import predict
 import plot_metrics
 # import  image processing algorithm modules
 import mulit_brightness
