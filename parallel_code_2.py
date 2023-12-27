@@ -1,7 +1,7 @@
 import numpy as np
 import threading
 
-def thread_num(algorithm,algo_factor,image,thread_numbers):
+def thread_code(algorithm,algo_factor,image,thread_numbers):
     # Divide image into equal-sized height segments
     height = image.shape[0]
     part_height = height // 5

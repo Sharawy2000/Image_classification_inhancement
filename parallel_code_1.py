@@ -1,7 +1,8 @@
 import numpy as np
 from concurrent.futures import ThreadPoolExecutor
 
-def thread_num(algorithm, algo_factor, image, thread_numbers):
+def thread_code(algorithm, algo_factor, image, thread_numbers):
+
     height = image.shape[0]
     part_height = height // thread_numbers
     image_threads = [image[i * part_height: (i + 1) * part_height, :] for i in range(thread_numbers)]
