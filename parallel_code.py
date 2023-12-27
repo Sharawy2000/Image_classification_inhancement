@@ -1,51 +1,19 @@
 import numpy as np
-import threading
+from concurrent.futures import ThreadPoolExecutor
 
-def thread_num(algorithm,algo_factor,image,thread_numbers):
-    # Divide image into equal-sized height segments 
+def thread_num(algorithm, algo_factor, image, thread_numbers):
     height = image.shape[0]
     part_height = height // thread_numbers
-
-    # Split the image into threads parts for parallel processing
     image_threads = [image[i * part_height: (i + 1) * part_height, :] for i in range(thread_numbers)]
 
-    # collect the output of thread for each part of image
-    results = []
+    with ThreadPoolExecutor() as executor:
+        futures = [executor.submit(algorithm, thread, algo_factor) for thread in image_threads]
+        results = [result.result() for result in futures]
 
-    # Function to apply brightness_algorithm to each image thread
-    def process_thread(thread_idx, thread):
-        result = algorithm(thread, algo_factor)
-        results.append((thread_idx, result))
-
-    # Create a list to store thread objects
-    threads = []
-
-    # Apply the brightness_algorithm to each image thread in parallel
-    for i, thread in enumerate(image_threads):
-
-        #create threads depend on image_parts
-        t = threading.Thread(target=process_thread, args=(i, thread))
-
-        #add it in thread to save
-        threads.append(t)
-
-        #run it
-        t.start()
-
-    # Wait for all threads to finish
-    for t in threads:
-        t.join()
-
-    # Obtain the sorted indices based on the row indices
-    sorted_indices = np.argsort([idx for idx, _ in results])
-
-    # Extract the results in the correct order
-    final_results = [results[i][1] for i in sorted_indices]
-
-    print("Finished threads")
+    sorted_indices = np.argsort([idx for idx, _ in enumerate(results)])
+    final_results = [results[i] for i in sorted_indices]
 
     Edited_image = np.concatenate(final_results, axis=0)
     Edited_image = Edited_image.astype(np.uint8)
 
     return Edited_image
-
